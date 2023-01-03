@@ -1,0 +1,2 @@
+binary "https://dl.google.com/dl/firebase/ios/carthage/FirebaseAnalyticsBinary.json" "10.3.0"
+binary "https://dl.google.com/dl/firebase/ios/carthage/FirebasePerformanceBinary.json" "10.3.0"
