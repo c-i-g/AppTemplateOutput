@@ -1,0 +1,69 @@
+
+############
+# Targets
+############
+
+targets:
+
+  # -----------
+  # AppTemplateOutput_macOS
+  # -----------
+
+  AppTemplateOutput_macOS:
+    type: application
+    platform: macOS
+
+    # sources
+    sources: 
+      - Sources/Common
+      - Sources/AppTemplateOutput macOS
+
+    # Config Files
+    configFiles:
+      Debug: config/macOS/xcconfig/Debug.xcconfig
+      Release: config/macOS/xcconfig/Release.xcconfig
+      Adhoc: config/macOS/xcconfig/Adhoc.xcconfig
+      Beta: config/macOS/xcconfig/Beta.xcconfig
+
+    # settings
+    settings:
+      ASSETCATALOG_COMPILER_APPICON_NAME: $(AS_APP_ICON)
+
+    # dependencies
+    dependencies:
+      - package: SwiftyUtils
+      - package: SwiftyBeaver
+
+    # scheme
+    scheme:
+      gatherCoverageData: true
+      testTargets:
+        - name: AppTemplateOutput_Tests_macOS
+          parallelizable: true
+          randomExecutionOrder: true
+
+    # scripts
+    postCompileScripts:
+      # swiftlint
+      - script: sh scripts/xcode/linting.sh
+        name: ⚠️ Swiftlint
+
+  # -----------
+  # AppTemplateOutput_Tests_macOS
+  # -----------
+
+  AppTemplateOutput_Tests_macOS:
+    platform: macOS
+    type: bundle.unit-test
+    sources:
+      - Tests/AppTemplateOutputTests macOS
+
+    # dependencies
+    dependencies:
+      - target: AppTemplateOutput_macOS
+
+    # scripts
+    postCompileScripts:
+      # swiftlint
+      - script: sh scripts/xcode/linting.sh
+        name: ⚠️ Swiftlint

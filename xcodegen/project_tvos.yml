@@ -1,0 +1,69 @@
+
+############
+# Targets
+############
+
+targets:
+
+  # -----------
+  # AppTemplateOutput_tvOS
+  # -----------
+
+  AppTemplateOutput_tvOS:
+    type: application
+    platform: tvOS
+
+    # sources
+    sources: 
+      - Sources/Common
+      - Sources/AppTemplateOutput tvOS
+
+    # Config Files
+    configFiles:
+      Debug: config/tvOS/xcconfig/Debug.xcconfig
+      Release: config/tvOS/xcconfig/Release.xcconfig
+      Adhoc: config/tvOS/xcconfig/Adhoc.xcconfig
+      Beta: config/tvOS/xcconfig/Beta.xcconfig
+
+    # settings
+    settings:
+      ASSETCATALOG_COMPILER_APPICON_NAME: $(AS_APP_ICON)
+
+    # dependencies
+    dependencies:
+      - package: SwiftyUtils
+      - package: SwiftyBeaver
+
+    # scheme
+    scheme:
+      gatherCoverageData: true
+      testTargets:
+        - name: AppTemplateOutput_Tests_tvOS
+          parallelizable: true
+          randomExecutionOrder: true
+
+    # scripts
+    postCompileScripts:
+      # swiftlint
+      - script: sh scripts/xcode/linting.sh
+        name: ⚠️ Swiftlint
+
+  # -----------
+  # AppTemplateOutput_Tests_tvOS
+  # -----------
+
+  AppTemplateOutput_Tests_tvOS:
+    platform: tvOS
+    type: bundle.unit-test
+    sources:
+      - Tests/AppTemplateOutputTests tvOS
+
+    # dependencies
+    dependencies:
+      - target: AppTemplateOutput_tvOS
+
+    # scripts
+    postCompileScripts:
+      # swiftlint
+      - script: sh scripts/xcode/linting.sh
+        name: ⚠️ Swiftlint

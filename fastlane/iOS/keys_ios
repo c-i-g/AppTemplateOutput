@@ -1,0 +1,10 @@
+ENV["TARGET"] = "iOS"
+ENV["SCHEME"] = "AppTemplateOutput"
+ENV["TEAM_ID"] = "FXN48TGVNE"
+ENV["CERTIFICATES_BRANCH"] = "myApp"
+
+ENV["XCWORKSPACE"] = "./AppTemplateOutput.xcworkspace"
+ENV["XCODEPROJ"] = "./AppTemplateOutput.xcodeproj"
+ENV["BORROW_PLIST"] = "./Sources/AppTemplateOutput iOS/Supporting\ Files/Info.plist"
+
+ENV["VERSION"] = "1.0.0"

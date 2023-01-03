@@ -1,0 +1,66 @@
+# ############
+# # Targets
+# ############
+
+targets:
+
+  # -----------
+  # AppTemplateOutput_watchOS_App
+  # -----------
+
+  AppTemplateOutput_watchOS_App:
+    type: application.watchapp2
+    platform: watchOS
+
+    # dependencies
+    dependencies:
+      - target: "AppTemplateOutput_watchOS_Extension"
+
+    # sources  
+    sources: 
+      - "Sources/AppTemplateOutput WatchKit App"
+
+    # settings
+    settings:
+      PRODUCT_BUNDLE_IDENTIFIER: $(AS_WKAPP_BUNDLE_IDENTIFIER)
+      ASSETCATALOG_COMPILER_APPICON_NAME: $(AS_APP_ICON)
+
+    # Config Files
+    configFiles:
+      Debug: config/iOS/xcconfig/Debug.xcconfig
+      Release: config/iOS/xcconfig/Release.xcconfig
+      Adhoc: config/iOS/xcconfig/Adhoc.xcconfig
+      Beta: config/iOS/xcconfig/Beta.xcconfig
+
+    # scheme
+    scheme:
+      configVariants:
+        AppTemplateOutput_watchOS_App
+
+  # -----------
+  # AppTemplateOutput_watchOS_Extension
+  # -----------
+
+  AppTemplateOutput_watchOS_Extension:
+    type: watchkit2-extension
+    platform: watchOS
+    sources: 
+      - "Sources/AppTemplateOutput WatchKit Extension"
+
+    # scripts
+    postCompileScripts:
+      # swiftlint
+      - script: sh scripts/xcode/linting.sh
+        name: ⚠️ Swiftlint
+
+    # settings
+    settings:
+      PRODUCT_BUNDLE_IDENTIFIER: $(AS_WKEXT_BUNDLE_IDENTIFIER)
+
+    # Config Files
+    configFiles:
+      Debug: config/iOS/xcconfig/Debug.xcconfig
+      Release: config/iOS/xcconfig/Release.xcconfig
+      Adhoc: config/iOS/xcconfig/Adhoc.xcconfig
+      Beta: config/iOS/xcconfig/Beta.xcconfig
+
